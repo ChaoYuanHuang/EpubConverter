@@ -3,6 +3,9 @@ import shutil
 import tkinter as tk
 import zipfile
 from tkinter import filedialog
+import opencc
+
+
 
 from hanziconv import HanziConv
 
@@ -12,7 +15,9 @@ def translate(translate_file_path):
         content = file.read()
     with open(file=translate_file_path, mode="w", encoding="utf-8") as file:
         if content:
-            content = HanziConv.toTraditional(content)
+            converter = opencc.OpenCC('s2twp.json')
+            content = converter.convert(content) 
+            # content = HanziConv.toTraditional(content)
             file.write(content)
 
 
